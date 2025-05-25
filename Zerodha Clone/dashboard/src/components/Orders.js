@@ -5,7 +5,7 @@ function Orders() {
     const [allOrders, setAllOrders] = useState([]);
     useEffect(() => {
         const fetchOrders=()=>{
-            axios.get("http://localhost:8080/allOrders")
+            axios.get("https://backend-a4bn.onrender.com/allOrders")
             .then((res) => {
                 setAllOrders(res.data);
             })

@@ -16,7 +16,7 @@ function Dashboard() {
     const [allHoldings, setAllHoldings] = useState([]);
     useEffect(() => {
         const fetchHoldings = () => {
-            axios.get("http://localhost:8080/allHoldings")
+            axios.get("https://backend-a4bn.onrender.com/allHoldings")
             .then((res) => setAllHoldings(res.data))
             .catch((err) => console.log("Error fetching holdings:", err));
         };
@@ -47,7 +47,7 @@ function Dashboard() {
     useEffect(() => {
         const fetchFunds = async () => {
             try {
-                const res = await axios.get("http://localhost:8080/getfunds", { withCredentials: true });
+                const res = await axios.get("https://backend-a4bn.onrender.com/getfunds", { withCredentials: true });
                 const { user, ...fundData } = res.data;
                 setFunds(prev => ({
                     ...prev,

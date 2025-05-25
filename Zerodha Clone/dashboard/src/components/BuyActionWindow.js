@@ -18,7 +18,7 @@ const BuyActionWindow = ({ uid, ltp }) => {
     setMarginRequired(totalMargin.toFixed(2));
   }, [stockQuantity, ltp]);
   const handleBuyClick = () => {
-    axios.post("http://localhost:8080/newOrders", {
+    axios.post("https://backend-a4bn.onrender.com/newOrders", {
       user:funds.user,
       name: uid,
       qty: stockQuantity,
