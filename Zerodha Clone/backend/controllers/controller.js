@@ -6,11 +6,17 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const SECRET = process.env.SECRET;
 module.exports.getAllHoldings=async(req,res)=>{
-  let allHoldings=await HoldingsModel.find({});
+  const token = req.cookies.token;
+  const decoded = jwt.verify(token, SECRET);
+  const userId = decoded.id;
+  const allHoldings=await HoldingsModel.find({userId});
   res.json(allHoldings);
 };
 module.exports.getAllOrders=async(req,res)=>{
-  let allOrders=await OrdersModel.find({});
+  const token = req.cookies.token;
+  const decoded = jwt.verify(token, SECRET);
+  const userId = decoded.id;
+  const allOrders = await OrdersModel.find({userId});
   res.json(allOrders);
 };
 module.exports.newOrders=async(req,res)=>{
@@ -26,15 +32,15 @@ module.exports.newOrders=async(req,res)=>{
     fund.availableCash -= cost;
     fund.availableMargin = fund.availableCash;
     await fund.save();
-    const newOrder=new OrdersModel({name,qty,price,mode});
+    const newOrder=new OrdersModel({userId: fundUser._id,name,qty,price,mode});
     await newOrder.save();
-    const newHolding = new HoldingsModel({name,qty,price});
+    const newHolding = new HoldingsModel({userId: fundUser._id,name,qty,price});
     await newHolding.save();
     return res.json({ message: "Buy order placed and funds updated" });
   };
   if (mode === "SELL") {
     let remainingQty = qty;
-    const stocks = await HoldingsModel.find({ name }).sort({ createdAt: 1 });
+    const stocks = await HoldingsModel.find({ userId: fundUser._id, name }).sort({ createdAt: 1 });
     const totalQty = stocks.reduce((sum, stock) => sum + stock.qty, 0);
     if (totalQty < remainingQty) {
       return res.status(400).json({ error: "Not enough stock to sell" });
@@ -55,7 +61,7 @@ module.exports.newOrders=async(req,res)=>{
     fund.availableCash += cost;
     fund.availableMargin = fund.availableCash;
     await fund.save();
-    const newOrder = new OrdersModel({ name, qty, price, mode });
+    const newOrder = new OrdersModel({ userId: fundUser._id, name, qty, price, mode });
     await newOrder.save();
     return res.json({ message: "Sell order placed and margin released" });
   }
