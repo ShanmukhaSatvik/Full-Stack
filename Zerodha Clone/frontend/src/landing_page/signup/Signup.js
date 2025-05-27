@@ -39,7 +39,7 @@ function Signup() {
             if (success) {
                 handleSuccess(message);
                 setTimeout(() => {
-                    window.location.href = "https://dashboard-w5dz.onrender.com";
+                    window.location.href = "https://dashboard-9t3p.onrender.com";
                 }, 1000);
             } else {
                 handleError(message);

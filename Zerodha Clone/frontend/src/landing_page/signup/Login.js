@@ -32,7 +32,7 @@ function Login() {
             console.log(data);
             const { success, message} = data;
             if (success) {
-               window.location.href = "https://dashboard-w5dz.onrender.com";
+               window.location.href = "https://dashboard-9t3p.onrender.com";
             } else {
                 handleError(message);
                 setInputValue({
