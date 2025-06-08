@@ -29,7 +29,7 @@ function Signup() {
         e.preventDefault();
         try {
             const { data } = await axios.post(
-                "https://backend-a4bn.onrender.com/signup",
+                "http://localhost:8080/signup",
                 {
                     ...inputValue,
                 },
@@ -39,7 +39,7 @@ function Signup() {
             if (success) {
                 handleSuccess(message);
                 setTimeout(() => {
-                    window.location.href = "https://dashboard-9t3p.onrender.com";
+                    window.location.href = "http://localhost:3000/dashboard";
                 }, 1000);
             } else {
                 handleError(message);

@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import styles from "../index.module.css";
 function Orders() {
     const [allOrders, setAllOrders] = useState([]);
     useEffect(() => {
         const fetchOrders=()=>{
-            axios.get("https://backend-a4bn.onrender.com/allOrders")
+            axios.get("http://localhost:8080/allOrders", { withCredentials: true })
             .then((res) => {
                 setAllOrders(res.data);
             })
@@ -19,18 +20,18 @@ function Orders() {
     }, []);
     return (
         allOrders.length === 0 ? (
-            <div className="orders">
-                <div className="no-orders">
+            <div className={styles["orders"]}>
+                <div className={styles["no-orders"]}>
                     <p>You haven't placed any orders today</p>
-                    <Link to={"/"} className="btn">
+                    <Link to={"/"} className={styles["btn"]}>
                         Get started
                     </Link>
                 </div>
             </div>)
             : (
                 <>
-                    <h3 className="title">Open orders ({allOrders.length})</h3>
-                    <div className="order-table">
+                    <h3 className={styles["title"]}>Open orders ({allOrders.length})</h3>
+                    <div className={styles["order-table"]}>
                         <table>
                             <thead>
                                 <tr>
@@ -44,7 +45,7 @@ function Orders() {
                             <tbody>
                             {allOrders.map((stock, index) => {
                                 const isBuy=stock.mode==="BUY";
-                                const typeClass=isBuy?"profit":"loss";
+                                const typeClass=isBuy? styles.profit : styles.loss;
                                 return (
                                     <tr key={index}>
                                         <td>{stock.name}</td>

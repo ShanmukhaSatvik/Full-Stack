@@ -4,6 +4,7 @@ import { BarChartOutlined, KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons
 import GeneralContext from "./GeneralContext";
 import MarketDataContext from './MarketDataContext';
 import axios from 'axios';
+import styles from "../index.module.css";
 import { DoughnutChart } from './DoughnutChart';
 const API_KEY = `867975976792493c927f6284d75c94a1`;//382c264c1ec747f88811261883660ac2
 const symbols = ["AAPL", "MSFT", "GOOG", "TSLA", "AMZN", "META", "NVDA", "NFLX"];
@@ -86,18 +87,18 @@ function WatchList() {
         fetchQuotes();
     }, [setMarketData]);
     return (
-        <div className="watchlist-container">
-            <div className="search-container">
+        <div className={styles["watchlist-container"]}>
+            <div className={styles["search-container"]}>
                 <input
                     type="text"
                     name="search"
                     id="search"
                     placeholder="Search eg:infy, bse, nifty fut weekly, gold mcx"
-                    className="search"
+                    className={styles["search"]}
                 />
-                <span className="counts"> {watchlistData.length} / 50</span>
+                <span className={styles["counts"]}> {watchlistData.length} / 50</span>
             </div>
-            <ul className="list">
+            <ul className={styles["list"]}>
                 {watchlistData.map((stock, uid) => {
                     return (
                         <WatchListItem stock={stock} key={uid} ltp={stock.ltp}/>
@@ -119,16 +120,16 @@ function WatchListItem({ stock }) {
     const toggleAnalytics = () => setShowAnalytics(prev => !prev);
     return (
         <li onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-            <div className='item'>
-                <p className={stock.isDown ? "down" : "up"}>{stock.name}</p>
-                <div className='itemInfo'>
-                    <span className='percent'>{stock.percent}</span>
+            <div className={styles['item']}>
+                <p className={stock.isDown ? styles.down : styles.up }>{stock.name}</p>
+                <div className={styles['itemInfo']}>
+                    <span className={styles['percent']}>{stock.percent}</span>
                     {stock.isDown ? (
-                        <KeyboardArrowDown className="down" />
+                        <KeyboardArrowDown className={styles["down"]} />
                     ) : (
-                        <KeyboardArrowUp className="up" />
+                        <KeyboardArrowUp className={styles["up"]} />
                     )}
-                    <span className='price'>{stock.price}</span>
+                    <span className={styles['price']}>{stock.price}</span>
                 </div>
             </div>
             {showWatchListActions && (
@@ -139,7 +140,7 @@ function WatchListItem({ stock }) {
                 />
             )}
             {showAnalytics && ( 
-                <div className='analytics'>
+                <div className={styles['analytics']}>
                     <p>Open: ${stock.open?.toFixed(2)}</p>
                     <p>High: ${stock.high?.toFixed(2)}</p>
                     <p>Low: ${stock.low?.toFixed(2)}</p>
@@ -158,17 +159,17 @@ function WatchListActions({ uid,ltp,toggleAnalytics }) {
         generalContext.openSellWindow(uid,ltp);
     };
     return (
-        <span className='actions'>
+        <span className={styles['actions']}>
             <span>
                 <Tooltip title="Buy (B)" placement='top' arrow TransitionComponent={Grow} onClick={handleBuyClick}>
-                    <button className='buy'>Buy</button>
+                    <button className={styles['buy']}>Buy</button>
                 </Tooltip>
                 <Tooltip title="Sell (S)" placement='top' arrow TransitionComponent={Grow} onClick={handleSellClick}>
-                    <button className='sell'>Sell</button>
+                    <button className={styles['sell']}>Sell</button>
                 </Tooltip>
                 <Tooltip title="Analytics (A)" placement='top' arrow TransitionComponent={Grow}>
-                    <button className='action' onClick={toggleAnalytics}>
-                        <BarChartOutlined className='icon' />
+                    <button className={styles['action']} onClick={toggleAnalytics}>
+                        <BarChartOutlined className={styles['icon']} />
                     </button>
                 </Tooltip>
             </span>

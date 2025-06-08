@@ -10,13 +10,14 @@ import Funds from './Funds';
 import { GeneralContextProvider } from "./GeneralContext";
 import MarketDataContext from './MarketDataContext'; 
 import FundsDataContext from './FundsDataContext';
+import styles from "../index.module.css";
 function Dashboard() {
     const { setFunds } = useContext(FundsDataContext);
     const { marketData } = useContext(MarketDataContext); 
     const [allHoldings, setAllHoldings] = useState([]);
     useEffect(() => {
         const fetchHoldings = () => {
-            axios.get("https://backend-a4bn.onrender.com/allHoldings")
+            axios.get("http://localhost:8080/allHoldings", { withCredentials: true })
             .then((res) => setAllHoldings(res.data))
             .catch((err) => console.log("Error fetching holdings:", err));
         };
@@ -32,7 +33,7 @@ function Dashboard() {
         }, 0);
         const pnl = currentValue - investment;
         const pnlPercent = investment > 0 ? (pnl / investment) * 100 : 0;
-        const profClass = pnl >= 0 ? "profit" : "loss";
+        const profClass = pnl >= 0 ? styles.profit : styles.loss;
         const holdingsCount = allHoldings.length;
         setFunds(prevFunds => ({
             ...prevFunds,
@@ -47,7 +48,7 @@ function Dashboard() {
     useEffect(() => {
         const fetchFunds = async () => {
             try {
-                const res = await axios.get("https://backend-a4bn.onrender.com/getfunds", { withCredentials: true });
+                const res = await axios.get("http://localhost:8080/getfunds", { withCredentials: true });
                 const { user, ...fundData } = res.data;
                 setFunds(prev => ({
                     ...prev,
@@ -63,11 +64,11 @@ function Dashboard() {
         return () => clearInterval(intervalId);
     }, [setFunds]);
     return (
-            <div className="dashboard-container">
+            <div className={styles["dashboard-container"]}>
                 <GeneralContextProvider>
                     <WatchList/>
                 </GeneralContextProvider>
-                <div className="content">
+                <div className={styles["content"]}>
                     <Routes>
                         <Route exact path='/' element={<Summary />}/>
                         <Route path="/holdings" element={<Holdings allHoldings={allHoldings} />} />

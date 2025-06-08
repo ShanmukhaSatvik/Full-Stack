@@ -67,6 +67,10 @@ code {
   margin-top: 5%;
 }
 
+.table-row {
+  margin-top: 5%;
+}
+
 .col {
   flex-basis: 48%;
   text-align: left;

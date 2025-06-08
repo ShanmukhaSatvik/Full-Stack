@@ -3,6 +3,7 @@ import { Link,useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
+import styles from "../index.module.css";
 function Menu() {
     const [selectedMenu,setSelectedMenu]=useState(0);
     const [isProfileDropdownOpen,setIsProfileDropdownOpen]=useState(false);
@@ -20,11 +21,11 @@ function Menu() {
     useEffect(() => {
       const verifyCookie = async () => {
         if (!cookies.token) {
-          window.location.href = "https://frontend-idk2.onrender.com/login";
+          window.location.href = "http://localhost:3000/login";
           return;
         }
         const { data } = await axios.post(
-          "https://backend-a4bn.onrender.com",
+          "http://localhost:8080",
           {},
           { withCredentials: true }
         );
@@ -37,7 +38,7 @@ function Menu() {
             }
         } else {
             removeCookie("token");
-            window.location.href = "https://frontend-idk2.onrender.com/login";
+            window.location.href = "http://localhost:3000/login";
         }
       };
       verifyCookie();
@@ -56,48 +57,46 @@ function Menu() {
     }, [cookies, navigate, removeCookie,hasShownToast,username]);
     const Logout = () => {
       removeCookie("token");
-      window.location.href = "https://frontend-idk2.onrender.com";
+      window.location.href = "http://localhost:3000";
     };
-    const menuClass="menu";
-    const activeMenuClass="menu selected";
     return (
-        <div className="menus-container">
+        <div className={styles["menus-container"]}>
             <img src="/assets/logo.png" style={{ width: "50px" }} alt="Logo-Image"/>
-            <div className="menus">
+            <div className={styles["menus"]}>
                 <ul>
                     <li>
-                        <Link style={{textDecoration:"none"}} to="/" onClick={()=>handleMenuClick(0)}>
-                            <p className={selectedMenu===0?activeMenuClass:menuClass}>Dashboard</p>
+                        <Link style={{textDecoration:"none"}} to="/dashboard/" onClick={()=>handleMenuClick(0)}>
+                            <p className={`${styles.menu} ${selectedMenu === 0 ? styles.selected : ""}`}>Dashboard</p>
                         </Link>
                     </li>
                     <li>
-                        <Link style={{textDecoration:"none"}} to="/orders" onClick={()=>handleMenuClick(1)}>
-                            <p className={selectedMenu===1?activeMenuClass:menuClass}>Orders</p>
+                        <Link style={{textDecoration:"none"}} to="/dashboard/orders" onClick={()=>handleMenuClick(1)}>
+                            <p className={`${styles.menu} ${selectedMenu === 1 ? styles.selected : ""}`}>Orders</p>
                         </Link>
                     </li>
                     <li>
-                        <Link style={{textDecoration:"none"}} to="/holdings" onClick={()=>handleMenuClick(2)}>
-                            <p className={selectedMenu===2?activeMenuClass:menuClass}>Holdings</p>
+                        <Link style={{textDecoration:"none"}} to="/dashboard/holdings" onClick={()=>handleMenuClick(2)}>
+                            <p className={`${styles.menu} ${selectedMenu === 2 ? styles.selected : ""}`}>Holdings</p>
                         </Link>
                     </li>
                     <li>
-                        <Link style={{textDecoration:"none"}} to="/positions" onClick={()=>handleMenuClick(3)}>
-                            <p className={selectedMenu===3?activeMenuClass:menuClass}>Positions</p>
+                        <Link style={{textDecoration:"none"}} to="/dashboard/positions" onClick={()=>handleMenuClick(3)}>
+                            <p className={`${styles.menu} ${selectedMenu === 3 ? styles.selected : ""}`}>Positions</p>
                         </Link>
                     </li>
                     <li>
-                        <Link style={{textDecoration:"none"}} to="/funds" onClick={()=>handleMenuClick(4)}>
-                            <p className={selectedMenu===4?activeMenuClass:menuClass}>Funds</p>
+                        <Link style={{textDecoration:"none"}} to="/dashboard/funds" onClick={()=>handleMenuClick(4)}>
+                            <p className={`${styles.menu} ${selectedMenu === 4 ? styles.selected : ""}`}>Funds</p>
                         </Link>
                     </li>
                 </ul>
                 <hr />
-                <div className="profile" onClick={handleProfileClick} ref={profileRef}>
-                    <div className="avatar">ZU</div>
-                    <p className="username mt-3">{username}</p>
+                <div className={styles["profile"]} onClick={handleProfileClick} ref={profileRef}>
+                    <div className={styles["avatar"]}>ZU</div>
+                    <p className={`${styles.username} mt-3`}>{username}</p>
                 </div>
                 {isProfileDropdownOpen && (
-                    <div className="profile-dropdown">
+                    <div className={styles["profile-dropdown"]}>
                         <button onClick={Logout}>Logout</button>
                     </div>
                 )}

@@ -18,7 +18,7 @@ const BuyActionWindow = ({ uid, ltp }) => {
     setMarginRequired(totalMargin.toFixed(2));
   }, [stockQuantity, ltp]);
   const handleBuyClick = () => {
-    axios.post("https://backend-a4bn.onrender.com/newOrders", {
+    axios.post("http://localhost:8080/newOrders", {
       user:funds.user,
       name: uid,
       qty: stockQuantity,
@@ -41,9 +41,9 @@ const BuyActionWindow = ({ uid, ltp }) => {
     closeBuyWindow();
   };
   return (
-    <div className="container" id="buy-window">
-      <div className="regular-order">
-        <div className="inputs">
+    <div className={"buy-container"} id="buy-window">
+      <div className={"regular-order"}>
+        <div className={"inputs"}>
           <fieldset>
             <legend>Qty.</legend>
             <input
@@ -67,13 +67,13 @@ const BuyActionWindow = ({ uid, ltp }) => {
           </fieldset>
         </div>
       </div>
-      <div className="buttons">
+      <div className={"buttons"}>
         <span>Margin required ₹{marginRequired}</span>
         <div>
-          <Link className="btn btn-blue" onClick={handleBuyClick}>
+          <Link className="btns btn-blue" onClick={handleBuyClick}>
             Buy
           </Link>
-          <Link to="" className="btn btn-grey" onClick={handleCancelClick}>
+          <Link to="" className="btns btn-grey" onClick={handleCancelClick}>
             Cancel
           </Link>
         </div>

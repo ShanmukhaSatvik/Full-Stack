@@ -1,12 +1,13 @@
 import { useState,useEffect, useContext } from "react";
 import axios from "axios";
 import MarketDataContext from "./MarketDataContext";
+import styles from "../index.module.css";
 function Positions() {
     const [allPositions,setAllPositions]=useState([]);
     const { marketData } = useContext(MarketDataContext);
     useEffect(()=>{
         const fetchPositions=()=>{
-        axios.get("https://backend-a4bn.onrender.com/allHoldings")
+        axios.get("http://localhost:8080/allHoldings", { withCredentials: true })
             .then((res)=>{
                 setAllPositions(res.data);
             })
@@ -24,8 +25,8 @@ function Positions() {
     });
     return (
         <>
-            <h3 className="title">Positions ({positions.length})</h3>
-            <div className="order-table">
+            <h3 className={styles["title"]}>Positions ({positions.length})</h3>
+            <div className={styles["order-table"]}>
                 <table>
                     <thead>
                         <tr>
@@ -45,8 +46,8 @@ function Positions() {
                         const pnlRaw = currValue - cost;
                         const pnl = Math.abs(pnlRaw) < 0.01 ? 0 : pnlRaw;
                         const isProfit = pnl >= 0;
-                        const profClass = isProfit ? "profit" : "loss";
-                        const quoteClass = quote.percent>=0? "profit" : "loss";
+                        const profClass = isProfit ? styles.profit : styles.loss;
+                        const quoteClass = quote.percent>=0? styles.profit : styles.loss;
                         return (
                             <tr key={index}>
                                 <td>{stock.name}</td>

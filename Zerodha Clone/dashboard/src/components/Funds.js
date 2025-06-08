@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import axios from "axios";
 import FundsDataContext from './FundsDataContext';
 import { toast } from "react-toastify";
+import styles from "../index.module.css";
 function Funds() {
   const { funds } = useContext(FundsDataContext);
   const [inputValue, setInputValue] = useState({ password: "", username: "" });
@@ -26,9 +27,10 @@ function Funds() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post("https://backend-a4bn.onrender.com/userVerification", {
-        ...inputValue,
-      });
+      const { data } = await axios.post("http://localhost:8080/userVerification", 
+        {...inputValue},
+        { withCredentials: true }
+      );
       const { success, message } = data;
       if (success) {
         handleSuccess(message);
@@ -49,7 +51,7 @@ function Funds() {
     }
     const user = funds.user;
     try {
-      const response = await axios.post("https://backend-a4bn.onrender.com/depositfunds", {
+      const response = await axios.post("http://localhost:8080/depositfunds", {
         user,
         amount: parseFloat(fundAmount),
       });
@@ -66,7 +68,7 @@ function Funds() {
     }
     const user = funds.user;
     try {
-      const response = await axios.post("https://backend-a4bn.onrender.com/withdrawfunds", {
+      const response = await axios.post("http://localhost:8080/withdrawfunds", {
         user,
         amount: parseFloat(fundAmount),
       });
@@ -92,16 +94,16 @@ function Funds() {
   };
   return (
     <>
-      <div className="funds">
+      <div className={styles["funds"]}>
         <p>Instant, zero-cost fund transfers with UPI </p>
         <button
-          className={`btns ${showVerification && !isWithdrawing ? 'btns-danger' : 'btns-success'} mx-2`}
+          className={`${styles.btns} ${showVerification && !isWithdrawing ?  styles["btns-danger"] : styles["btns-success"]} mx-2`}
           onClick={() => toggleVerification(false)}
         >
           {showVerification && !isWithdrawing ? "Cancel" : "Add Funds"}
         </button>
         <button
-          className={`btns ${showVerification && isWithdrawing ? 'btns-danger' : 'btns-primary'}`}
+          className={`${styles.btns} ${showVerification && isWithdrawing ?  styles["btns-danger"] : styles['btns-primary']}`}
           onClick={() => toggleVerification(true)}
         >
           {showVerification && isWithdrawing ? "Cancel" : "Withdraw"}
@@ -109,7 +111,7 @@ function Funds() {
       </div>
       {showVerification && (
         <div className="text-center">
-          <img src="assets/upi.png" alt="UPI-Image" />
+          <img src="/assets/upi.png" alt="UPI-Image" />
           {!isVerified ? (
             <form onSubmit={handleSubmit}>
               <label htmlFor="username">Username</label>&nbsp;&nbsp;
@@ -131,7 +133,7 @@ function Funds() {
                 className="mb-3"
                 onChange={handleChange}
               /><br />
-              <button className='p-2 btns btns-primary fs-5 mb-3' type="submit">Verify</button>
+              <button className={`p-2 fs-5 mb-3 ${styles.btns} ${styles["btns-primary"]}`} type="submit">Verify</button>
             </form>
           ) : (
             <div className="mt-4 p-3 border rounded shadow-sm">
@@ -146,43 +148,53 @@ function Funds() {
               />
               <div className="d-flex justify-content-center gap-3">
                 <button
-                  className="btns btns-success"
+                  className={`${styles.btns} ${styles["btns-success"]}`}
                   onClick={isWithdrawing ? handleWithdrawFunds : handleAddFunds}
                 >
                   {isWithdrawing ? "Withdraw" : "Add Funds"}
                 </button>
-                <button className="btns btns-danger" onClick={() => toggleVerification(isWithdrawing)}>Cancel</button>
+                <button className={`${styles.btns} ${styles["btns-danger"]}`} onClick={() => toggleVerification(isWithdrawing)}>Cancel</button>
               </div>
             </div>
           )}
         </div>
       )}
-      <div className="row">
-        <div className="col">
+      <div className={styles["table-row"]}>
+        <div className={styles["col"]}>
           <span>
             <p>Equity</p>
           </span>
-          <div className="table">
-            <div className="data">
+          <div className={styles["table"]}>
+            <div className={styles["data"]}>
               <p>Available margin</p>
-              <p className="imp colored">{safeFixed(funds?.availableMargin)}</p>
+              <p className={`${styles["imp"]} ${styles["colored"]}`}>
+                {safeFixed(funds?.availableMargin)}
+              </p>
             </div>
-            <div className="data">
+            <div className={styles["data"]}>
               <p>Used margin</p>
-              <p className="imp">{safeFixed(funds?.usedMargin)}</p>
+              <p className={styles["imp"]}>
+                {safeFixed(funds?.usedMargin)}
+              </p>
             </div>
-            <div className="data">
+            <div className={styles["data"]}>
               <p>Available cash</p>
-              <p className="imp">{safeFixed(funds?.availableCash)}</p>
+              <p className={styles["imp"]}>
+                {safeFixed(funds?.availableCash)}
+              </p>
             </div>
             <hr />
-            <div className="data">
+            <div className={styles["data"]}>
               <p>Opening Balance</p>
-              <p>{safeFixed(funds?.openingBalance)}</p>
+              <p className={styles["imp"]}>
+                {safeFixed(funds?.openingBalance)}
+              </p>
             </div>
-            <div className="data">
+            <div className={styles["data"]}>
               <p>Payin</p>
-              <p>{safeFixed(funds?.payin)}</p>
+              <p className={styles["imp"]}>
+                {safeFixed(funds?.payin)}
+              </p>
             </div>
           </div>
         </div>

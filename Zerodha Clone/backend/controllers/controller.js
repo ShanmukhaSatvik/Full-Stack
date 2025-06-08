@@ -6,15 +6,31 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const SECRET = process.env.SECRET;
 module.exports.getAllHoldings=async(req,res)=>{
-  const token = req.cookies.token;
-  const decoded = jwt.verify(token, SECRET);
+  const token = req.cookies?.token;
+  if (!token) {
+    return res.status(401).json({ error: 'JWT token not provided' });
+  }
+  let decoded;
+  try {
+    decoded = jwt.verify(token, SECRET);
+  } catch (err) {
+    return res.status(401).json({ error: 'Invalid or expired token' });
+  }
   const userId = decoded.id;
   const allHoldings=await HoldingsModel.find({userId});
   res.json(allHoldings);
 };
 module.exports.getAllOrders=async(req,res)=>{
-  const token = req.cookies.token;
-  const decoded = jwt.verify(token, SECRET);
+  const token = req.cookies?.token;
+  if (!token) {
+    return res.status(401).json({ error: 'JWT token not provided' });
+  }
+  let decoded;
+  try {
+    decoded = jwt.verify(token, SECRET);
+  } catch (err) {
+    return res.status(401).json({ error: 'Invalid or expired token' });
+  }
   const userId = decoded.id;
   const allOrders = await OrdersModel.find({userId});
   res.json(allOrders);
@@ -92,8 +108,16 @@ module.exports.depositFunds=async (req,res) => {
   }
 };
 module.exports.getfunds=async (req,res) => {
-  const token = req.cookies.token;
-  const decoded = jwt.verify(token, SECRET);
+  const token = req.cookies?.token;
+  if (!token) {
+    return res.status(401).json({ error: 'JWT token not provided' });
+  }
+  let decoded;
+  try {
+    decoded = jwt.verify(token, SECRET);
+  } catch (err) {
+    return res.status(401).json({ error: 'Invalid or expired token' });
+  }
   const userId = decoded.id;
   const user = await UsersModel.findById(userId);
   const fund=await FundsModel.findOne({userId});
@@ -107,8 +131,20 @@ module.exports.userVerification=async (req,res) => {
   if(!username || !password ){
     return res.json({message:'All fields are required'})
   }
+  const token = req.cookies?.token;
+  if (!token) {
+    return res.status(401).json({ error: 'JWT token not provided' });
+  }
+  let decoded;
+  try {
+    decoded = jwt.verify(token, SECRET);
+  } catch (err) {
+    return res.status(401).json({ error: 'Invalid or expired token' });
+  }
+  const userId = decoded.id;
+  const verifiedUser = await UsersModel.findById(userId);
   const user=await UsersModel.findOne({username});
-  if(!user){
+  if((verifiedUser.username !== username) || !user){
     return res.json({message:"Invalid password or username"});
   };
   const auth = await bcrypt.compare(password,user.password);

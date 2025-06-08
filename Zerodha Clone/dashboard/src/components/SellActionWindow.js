@@ -17,7 +17,7 @@ const SellActionWindow = ({ uid, ltp }) => {
         setexpectedCredit(totalCredit.toFixed(2));
     }, [stockQuantity, ltp]);
     const handleSellClick = () => {
-        axios.post("https://backend-a4bn.onrender.com/newOrders", {
+        axios.post("http://localhost:8080/newOrders", {
             user:funds.user,
             name: uid,
             qty: stockQuantity,
@@ -40,7 +40,7 @@ const SellActionWindow = ({ uid, ltp }) => {
         closeSellWindow();
     };
     return (
-        <div className="container" id="buy-window" draggable="true">
+        <div className="buy-container" id="buy-window" draggable="true">
             <div className="regular-order">
                 <div className="inputs">
                     <fieldset>
@@ -68,10 +68,10 @@ const SellActionWindow = ({ uid, ltp }) => {
             <div className="buttons">
                 <span>Net Expected credit ₹{expectedCredit}</span>
                 <div>
-                    <Link className="btn btn-red" onClick={handleSellClick}>
+                    <Link className="btns btn-red" onClick={handleSellClick}>
                         Sell
                     </Link>
-                    <Link to="" className="btn btn-grey" onClick={handleCancelClick}>
+                    <Link to="" className="btns btn-grey" onClick={handleCancelClick}>
                         Cancel
                     </Link>
                 </div>

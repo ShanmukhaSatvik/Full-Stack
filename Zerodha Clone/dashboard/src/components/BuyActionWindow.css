@@ -1,4 +1,4 @@
-.container {
+.buy-container {
     --radius: 4px;
     width: 40%;
     height: 63%;
@@ -163,7 +163,7 @@
     font-size: 0.8rem;
   }
   
-  .btn {
+  .btns {
     text-decoration: none;
     padding: 10px 20px;
     border-radius: 2px;
@@ -179,6 +179,10 @@
   
   .btn-blue {
     background: #4184f3;
+  }
+
+  .btn-red {
+    background: #ff5722;
   }
   
   /* sudo selectors */

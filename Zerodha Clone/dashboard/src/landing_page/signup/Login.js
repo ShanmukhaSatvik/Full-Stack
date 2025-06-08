@@ -23,7 +23,7 @@ function Login() {
         e.preventDefault();
         try {
             const { data } = await axios.post(
-                "https://backend-a4bn.onrender.com/login",
+                "http://localhost:8080/login",
                 {
                     ...inputValue,
                 },
@@ -32,7 +32,7 @@ function Login() {
             console.log(data);
             const { success, message} = data;
             if (success) {
-               window.location.href = "https://dashboard-9t3p.onrender.com";
+               window.location.href = "http://localhost:3000/dashboard";
             } else {
                 handleError(message);
                 setInputValue({
@@ -63,7 +63,7 @@ function Login() {
                 </form>
                 <div className="text-muted mt-4">
                     Don't have an account?&nbsp;
-                    <span onClick={() => window.location.href = "https://frontend-idk2.onrender.com/signup"} style={{ color: 'blue', cursor: 'pointer' }}>
+                    <span onClick={() => window.location.href = "http://localhost:3000/signup"} style={{ color: 'blue', cursor: 'pointer' }}>
                         Signup
                     </span>
                 </div>

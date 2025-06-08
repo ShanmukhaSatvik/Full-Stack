@@ -2,6 +2,7 @@ import MarketDataContext from './MarketDataContext';
 import { useState,useEffect,useContext } from "react";
 import { VerticalGraph } from './VerticalGraph';
 import FundsDataContext from './FundsDataContext';
+import styles from "../index.module.css";
 function Holdings({ allHoldings: propAllHoldings = [] }) {
     const { marketData } = useContext(MarketDataContext);
     const { funds={} } = useContext(FundsDataContext);
@@ -47,8 +48,8 @@ function Holdings({ allHoldings: propAllHoldings = [] }) {
     };
     return (
         <>
-            <h3 className="title">Holdings ({funds.holdings})</h3>
-            <div className="order-table">
+            <h3 className={styles["title"]}>Holdings ({funds.holdings})</h3>
+            <div className={styles["order-table"]}>
                 <table>
                     <thead>
                         <tr>
@@ -83,10 +84,10 @@ function Holdings({ allHoldings: propAllHoldings = [] }) {
                             const pnlRaw= currValue-cost;
                             const pnl = Math.abs(pnlRaw) < 0.01 ? 0 : pnlRaw;
                             const isProfit = pnl >= 0;
-                            const profClass = isProfit ? "profit" : "loss";
+                            const profClass = isProfit ? styles.profit : styles.loss;
                             const returnRaw = (pnl / cost) * 100;
                             const returnPercent = Math.abs(returnRaw) < 0.01 ? 0 : returnRaw;
-                            const quoteClass = typeof quote.percent === 'number' && quote.percent >= 0 ? "profit" : "loss";
+                            const quoteClass = typeof quote.percent === 'number' && quote.percent >= 0 ? styles.profit : styles.loss;
                             return (
                                 <tr key={uid}>
                                     <td>{stock.name}</td>
@@ -103,20 +104,20 @@ function Holdings({ allHoldings: propAllHoldings = [] }) {
                     </tbody>
                 </table>
             </div>
-            <div className="row">
-                <div className="col">
+            <div className={styles["row"]}>
+                <div className={styles["col"]}>
                     <h5>
                         {formatWithDecimalSpan(funds.investment)} 
                     </h5>
                     <p>Total investment</p>
                 </div>
-                <div className="col">
+                <div className={styles["col"]}>
                     <h5>
                         {formatWithDecimalSpan(funds.currentValue)} 
                     </h5>
                     <p>Current value</p>
                 </div>
-                <div className="col">
+                <div className={styles["col"]}>
                     <h5 className={funds.profClass}> 
                         {formatWithDecimalSpan(funds.pnl)} ({safeFixed(funds.pnlPercent)}%) 
                     </h5>
