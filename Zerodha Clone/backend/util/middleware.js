@@ -26,8 +26,10 @@ const Signup=async(req,res,next)=>{
     await newFunds.save();
     const token = createSecretToken(newUser._id);
     res.cookie("token", token, {
-      withCredentials: true,
-      httpOnly: false,
+    httpOnly: true,      
+    secure: true,        
+    sameSite: "none",    
+    maxAge: 3 * 24 * 60 * 60 * 1000, 
     });
     return res.status(201).json({
       message:"User signed in successfully",
@@ -54,8 +56,10 @@ const Login=async(req,res,next)=>{
     }
     const token = createSecretToken(user._id);
     res.cookie("token", token, {
-      withCredentials: true,
-      httpOnly: false,
+    httpOnly: true,      
+    secure: true,        
+    sameSite: "none",    
+    maxAge: 3 * 24 * 60 * 60 * 1000, 
     });
     return res.status(201).json({
       message:"User signed in successfully",
