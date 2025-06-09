@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 8080;
 const uri = process.env.MONGO_URL;
 const app = express();
 app.use(cors({
-    origin: ["https://finverse-dashboard.netlify.app/"],
+    origin: ["https://finverse-dashboard.netlify.app"],
     credentials: true
 }));
 app.use(express.json());

@@ -39,7 +39,7 @@ function Signup() {
             if (success) {
                 handleSuccess(message);
                 setTimeout(() => {
-                    window.location.href = "https://finverse-dashboard.netlify.app//dashboard";
+                    window.location.href = "https://finverse-dashboard.netlify.app/dashboard";
                 }, 1000);
             } else {
                 handleError(message);
