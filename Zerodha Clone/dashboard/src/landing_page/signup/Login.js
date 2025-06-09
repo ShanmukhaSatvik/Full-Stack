@@ -32,7 +32,7 @@ function Login() {
             console.log(data);
             const { success, message} = data;
             if (success) {
-               window.location.href = "https://dashboard-j0s7.onrender.com/dashboard";
+               window.location.href = "https://finverse-dashboard.netlify.app//dashboard";
             } else {
                 handleError(message);
                 setInputValue({
@@ -63,7 +63,7 @@ function Login() {
                 </form>
                 <div className="text-muted mt-4">
                     Don't have an account?&nbsp;
-                    <span onClick={() => window.location.href = "https://dashboard-j0s7.onrender.com/signup"} style={{ color: 'blue', cursor: 'pointer' }}>
+                    <span onClick={() => window.location.href = "https://finverse-dashboard.netlify.app//signup"} style={{ color: 'blue', cursor: 'pointer' }}>
                         Signup
                     </span>
                 </div>

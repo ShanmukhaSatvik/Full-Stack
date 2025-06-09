@@ -21,7 +21,7 @@ function Menu() {
     useEffect(() => {
       const verifyCookie = async () => {
         if (!cookies.token) {
-          window.location.href = "https://dashboard-j0s7.onrender.com/login";
+          window.location.href = "https://finverse-dashboard.netlify.app//login";
           return;
         }
         const { data } = await axios.post(
@@ -38,7 +38,7 @@ function Menu() {
             }
         } else {
             removeCookie("token");
-            window.location.href = "https://dashboard-j0s7.onrender.com/login";
+            window.location.href = "https://finverse-dashboard.netlify.app//login";
         }
       };
       verifyCookie();
@@ -57,7 +57,7 @@ function Menu() {
     }, [cookies, navigate, removeCookie,hasShownToast,username]);
     const Logout = () => {
       removeCookie("token");
-      window.location.href = "https://dashboard-j0s7.onrender.com";
+      window.location.href = "https://finverse-dashboard.netlify.app/";
     };
     return (
         <div className={styles["menus-container"]}>
