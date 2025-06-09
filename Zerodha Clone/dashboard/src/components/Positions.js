@@ -7,7 +7,7 @@ function Positions() {
     const { marketData } = useContext(MarketDataContext);
     useEffect(()=>{
         const fetchPositions=()=>{
-        axios.get("http://localhost:8080/allHoldings", { withCredentials: true })
+        axios.get("https://backend-9mwf.onrender.com/allHoldings", { withCredentials: true })
             .then((res)=>{
                 setAllPositions(res.data);
             })

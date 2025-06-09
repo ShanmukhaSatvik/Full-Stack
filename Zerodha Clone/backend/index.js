@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 8080;
 const uri = process.env.MONGO_URL;
 const app = express();
 app.use(cors({
-    origin: ["http://localhost:3000", "http://localhost:3001"],
+    origin: ["https://dashboard-j0s7.onrender.com"],
     credentials: true
 }));
 app.use(express.json());

@@ -27,7 +27,7 @@ function Funds() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post("http://localhost:8080/userVerification", 
+      const { data } = await axios.post("https://backend-9mwf.onrender.com/userVerification", 
         {...inputValue},
         { withCredentials: true }
       );
@@ -51,7 +51,7 @@ function Funds() {
     }
     const user = funds.user;
     try {
-      const response = await axios.post("http://localhost:8080/depositfunds", {
+      const response = await axios.post("https://backend-9mwf.onrender.com/depositfunds", {
         user,
         amount: parseFloat(fundAmount),
       });
@@ -68,7 +68,7 @@ function Funds() {
     }
     const user = funds.user;
     try {
-      const response = await axios.post("http://localhost:8080/withdrawfunds", {
+      const response = await axios.post("https://backend-9mwf.onrender.com/withdrawfunds", {
         user,
         amount: parseFloat(fundAmount),
       });

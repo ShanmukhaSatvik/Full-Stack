@@ -21,11 +21,11 @@ function Menu() {
     useEffect(() => {
       const verifyCookie = async () => {
         if (!cookies.token) {
-          window.location.href = "http://localhost:3000/login";
+          window.location.href = "https://dashboard-j0s7.onrender.com/login";
           return;
         }
         const { data } = await axios.post(
-          "http://localhost:8080",
+          "https://backend-9mwf.onrender.com",
           {},
           { withCredentials: true }
         );
@@ -38,7 +38,7 @@ function Menu() {
             }
         } else {
             removeCookie("token");
-            window.location.href = "http://localhost:3000/login";
+            window.location.href = "https://dashboard-j0s7.onrender.com/login";
         }
       };
       verifyCookie();
@@ -57,7 +57,7 @@ function Menu() {
     }, [cookies, navigate, removeCookie,hasShownToast,username]);
     const Logout = () => {
       removeCookie("token");
-      window.location.href = "http://localhost:3000";
+      window.location.href = "https://dashboard-j0s7.onrender.com";
     };
     return (
         <div className={styles["menus-container"]}>

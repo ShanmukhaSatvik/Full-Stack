@@ -6,7 +6,7 @@ import MarketDataContext from './MarketDataContext';
 import axios from 'axios';
 import styles from "../index.module.css";
 import { DoughnutChart } from './DoughnutChart';
-const API_KEY = `867975976792493c927f6284d75c94a1`;//382c264c1ec747f88811261883660ac2
+const API_KEY = `867975976792493c927f6284d75c94a1`;
 const symbols = ["AAPL", "MSFT", "GOOG", "TSLA", "AMZN", "META", "NVDA", "NFLX"];
 function WatchList() {
     const {setMarketData} = useContext(MarketDataContext);

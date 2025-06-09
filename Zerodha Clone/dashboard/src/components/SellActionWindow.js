@@ -17,7 +17,7 @@ const SellActionWindow = ({ uid, ltp }) => {
         setexpectedCredit(totalCredit.toFixed(2));
     }, [stockQuantity, ltp]);
     const handleSellClick = () => {
-        axios.post("http://localhost:8080/newOrders", {
+        axios.post("https://backend-9mwf.onrender.com/newOrders", {
             user:funds.user,
             name: uid,
             qty: stockQuantity,
