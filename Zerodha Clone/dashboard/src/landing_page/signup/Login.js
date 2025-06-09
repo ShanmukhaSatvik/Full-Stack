@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { ToastContainer,toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import "./Login.css";
 function Login() {
     const [inputValue, setInputValue] = useState({
@@ -8,6 +9,7 @@ function Login() {
         password: "",
     });
     const { email, password } = inputValue;
+    const navigate = useNavigate();
     const handleOnChange = (e) => {
         const { name, value } = e.target;
         setInputValue({
@@ -32,7 +34,9 @@ function Login() {
             console.log(data);
             const { success, message} = data;
             if (success) {
-               window.location.href = "https://finverse-dashboard.netlify.app/dashboard";
+               setTimeout(() => {
+                navigate("/dashboard");
+               }, 500);
             } else {
                 handleError(message);
                 setInputValue({
