@@ -6,6 +6,7 @@
   to = "http://backend-9mwf.onrender.com/login"
   status = 200
   force = true
+  method = "POST"
 [[redirects]]
   from = "/*"
   to = "/index.html"
