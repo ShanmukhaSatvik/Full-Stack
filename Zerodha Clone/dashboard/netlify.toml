@@ -1,7 +1,11 @@
 [build]
   command = "CI='' npm run build"
   publish = "build"
-
+[[redirects]]
+  from = "/login"
+  to = "http://backend-9mwf.onrender.com/login"
+  status = 200
+  force = true
 [[redirects]]
   from = "/*"
   to = "/index.html"
