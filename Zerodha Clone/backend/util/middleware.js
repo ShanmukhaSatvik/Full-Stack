@@ -50,10 +50,10 @@ const Login=async(req,res,next)=>{
     if(!user){
       return res.json({message:"Invalid password or email"});
     };
-    // const auth = await bcrypt.compare(password,user.password);
-    // if (!auth) {
-    //   return res.json({message:'Incorrect password or email' }) 
-    // }
+    const auth = await bcrypt.compare(password,user.password);
+    if (!auth) {
+      return res.json({message:'Incorrect password or email' }) 
+    }
     const token = createSecretToken(user._id);
     res.cookie("token", token, {
     httpOnly: true,      
