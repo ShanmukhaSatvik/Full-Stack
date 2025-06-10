@@ -70,19 +70,42 @@ const Login=async(req,res,next)=>{
     next(err);
   }
 };
-const userVerification=(req,res)=>{
-    const token = req.cookies.token;
+// const userVerification=(req,res)=>{
+//     const token = req.cookies.token;
+//     if (!token) {
+//     return res.json({ status: false });
+//     };
+//     jwt.verify(token, SECRET, async (err, data) => {
+//         if (err) {
+//          return res.json({ status: false })
+//         } else {
+//           const user = await UsersModel.findById(data.id);
+//           if (user) return res.json({ status: true, user: user.username })
+//           else return res.json({ status: false })
+//         }
+//     });
+// };
+const userVerification = async (req, res) => {
+    const token = req.cookies?.token; 
+
     if (!token) {
-    return res.json({ status: false });
-    };
-    jwt.verify(token, SECRET, async (err, data) => {
-        if (err) {
-         return res.json({ status: false })
+        return res.json({ status: false, message: 'No token provided' });
+    }
+
+    try {
+        const decoded = jwt.verify(token, SECRET);
+        const userId = decoded.id; 
+        const user = await UsersModel.findById(userId);
+
+        if (user) {
+            return res.json({ status: true, user: user.username, message: 'User verified successfully' });
         } else {
-          const user = await UsersModel.findById(data.id);
-          if (user) return res.json({ status: true, user: user.username })
-          else return res.json({ status: false })
+            return res.json({ status: false, message: 'User not found' });
         }
-    });
+    } catch (err) {
+        console.error("Token verification error:", err.message); 
+        return res.json({ status: false, message: 'Invalid or expired token' });
+    }
 };
+
 module.exports={Signup,Login,userVerification};
