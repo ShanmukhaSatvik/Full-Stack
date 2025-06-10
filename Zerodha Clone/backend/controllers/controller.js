@@ -126,27 +126,35 @@ module.exports.getfunds=async (req,res) => {
     ...fund.toObject()
   });
 };
-module.exports.userVerification = async (req, res) => {
+module.exports.userVerification=async (req,res) => {
+  const { username, password }=req.body;
+  if(!username || !password ){
+    return res.json({message:'All fields are required'})
+  }
   const token = req.cookies?.token;
   if (!token) {
-    return res.status(401).json({ error: "JWT token not provided" });
+    return res.status(401).json({ error: 'JWT token not provided' });
   }
-
+  let decoded;
   try {
-    const decoded = jwt.verify(token, SECRET);
-    const user = await UsersModel.findById(decoded.id);
-    if (!user) {
-      return res.status(401).json({ status: false });
-    }
-
-    return res.status(200).json({
-      status: true,
-      user: user.username,
-      message: "User verified successfully",
-    });
+    decoded = jwt.verify(token, SECRET);
   } catch (err) {
-    return res.status(401).json({ status: false });
+    return res.status(401).json({ error: 'Invalid or expired token' });
   }
+  const userId = decoded.id;
+  const verifiedUser = await UsersModel.findById(userId);
+  const user=await UsersModel.findOne({username});
+  if((verifiedUser.username !== username) || !user){
+    return res.json({message:"Invalid password or username"});
+  };
+  const auth = await bcrypt.compare(password,user.password);
+  if (!auth) {
+    return res.json({message:'Incorrect password or username' }) 
+  }
+  return res.status(201).json({
+    message:"User verified successfully",
+    success: true,
+  });
 };
 module.exports.withdrawFunds = async (req, res) => {
   try {
