@@ -24,11 +24,11 @@ function Menu() {
           window.location.href = "https://finverse-dashboard.netlify.app/login";
           return;
         }
-        const { data } = await axios.post(
-          "https://backend-9mwf.onrender.com",
-          {},
-          { withCredentials: true }
-        );
+        // const { data } = await axios.post(
+        //   "https://backend-9mwf.onrender.com",
+        //   {},
+        //   { withCredentials: true }
+        // );
         const { status, user } = data;
         setUsername(user);
         if (status) {
