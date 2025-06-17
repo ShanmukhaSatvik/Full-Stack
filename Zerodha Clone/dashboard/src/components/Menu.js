@@ -19,29 +19,29 @@ function Menu() {
     const [cookies, removeCookie] = useCookies([]);
     const [username, setUsername] = useState("");
     useEffect(() => {
-      const verifyCookie = async () => {
-        if (!cookies.token) {
-          window.location.href = "https://finverse-dashboard.netlify.app/login";
-          return;
-        }
-        // const { data } = await axios.post(
-        //   "https://backend-9mwf.onrender.com",
-        //   {},
-        //   { withCredentials: true }
-        // );
-        const { status, user } = data;
-        setUsername(user);
-        if (status) {
-            if (!hasShownToast) {
-                toast(`Hello ${user}`, { position: "top-right" });
-                setHasShownToast(true);
-            }
-        } else {
-            removeCookie("token");
-            window.location.href = "https://finverse-dashboard.netlify.app/login";
-        }
-      };
-      verifyCookie();
+    //   const verifyCookie = async () => {
+    //     if (!cookies.token) {
+    //       window.location.href = "https://finverse-dashboard.netlify.app/login";
+    //       return;
+    //     }
+    //     // const { data } = await axios.post(
+    //     //   "https://backend-9mwf.onrender.com",
+    //     //   {},
+    //     //   { withCredentials: true }
+    //     // );
+    //     const { status, user } = data;
+    //     setUsername(user);
+    //     if (status) {
+    //         if (!hasShownToast) {
+    //             toast(`Hello ${user}`, { position: "top-right" });
+    //             setHasShownToast(true);
+    //         }
+    //     } else {
+    //         removeCookie("token");
+    //         window.location.href = "https://finverse-dashboard.netlify.app/login";
+    //     }
+    //   };
+    //   verifyCookie();
       const handleClickOutside = (event) => {
         if (
             profileRef.current &&
